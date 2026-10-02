@@ -8,7 +8,7 @@ metadata:
     app: git-web                       # 리소스 식별용 이름표
 
 spec:
-  replicas: 2                          # 파드를 처음에 2개 실행!
+  replicas: 3                          # 파드를 처음에 2개 실행!
 
   selector:
     matchLabels:
