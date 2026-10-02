@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service                          # 서비스 리소스
+
+metadata:
+  name: git-web-service                # 서비스 이름 (클러스터 내부 도메인 주소)
+  namespace: git-k8s                   # git-k8s 방에 생성
+
+spec:
+  type: ClusterIP                      # 클러스터 내부 전용 대표 IP
+
+  selector:
+    app: git-web                       # app=git-web 라벨이 붙은 파드들로 연결
+
+  ports:
+    - port: 80                         # 서비스가 열 대표 포트 80
+      targetPort: 80                   # 파드 안쪽 80번 포트로 전달

@@ -1,0 +1,36 @@
+apiVersion: apps/v1                    # Deployment 관리 API
+kind: Deployment                       # 파드들을 관리해 주는 총괄 관리자
+
+metadata:
+  name: git-web                        # 디플로이먼트 이름
+  namespace: git-k8s                   # git-k8s 방에 생성
+  labels:
+    app: git-web                       # 리소스 식별용 이름표
+
+spec:
+  replicas: 2                          # 파드를 처음에 2개 실행!
+
+  selector:
+    matchLabels:
+      app: git-web                     # app=git-web 라벨 파드를 감시 대상으로 지정
+
+  template:                            # 실제 생성될 파드의 규격서
+    metadata:
+      labels:
+        app: git-web
+
+    spec:
+      containers:
+        - name: web                    # 컨테이너 이름
+          image: nginx:1.27-alpine     # 초경량 Nginx 웹서버 이미지
+
+          ports:
+            - containerPort: 80        # 컨테이너 내부 웹 기본 포트 80번
+
+          resources:                   # 컨테이너 자원 사용량 제한
+            requests:                  # 최소 필요 보장량
+              cpu: 100m
+              memory: 64Mi
+            limits:                    # 최대 사용 제한량
+              cpu: 500m
+              memory: 128Mi
